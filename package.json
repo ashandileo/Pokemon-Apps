@@ -19,6 +19,7 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime": "^7.17.8",
+    "@types/humps": "^2.0.2",
     "autoprefixer": "^10.4.8",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.4",
@@ -29,11 +30,14 @@
     "webpack-dev-server": "^4.8.0"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.2.3",
     "@types/jest": "^28.1.8",
     "@types/node": "^18.7.13",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "axios": "^0.27.2",
     "css-loader": "^6.7.1",
+    "humps": "^2.0.1",
     "postcss-loader": "^7.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

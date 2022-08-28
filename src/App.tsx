@@ -6,6 +6,8 @@ import Header from "./components/header/Header";
 import SearchBar from "./components/shared/SearchBar/SearchBar";
 import Badge from "./components/shared/SearchBar/Badge";
 import Skeleton from "react-loading-skeleton";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+
 import { useFetchAllPokemon, useFetchPokemonDetail } from "./api/usePokemon";
 
 import "./app.css";
@@ -100,10 +102,15 @@ const Pokemon = ({ pokemon, id }: IPokemonProps) => {
   return (
     <div className="shadow rounded cursor-pointer transition-all flex flex-col items-center justify-center py-[12px] px-[8px] relative">
       <p className="absolute top-[8px] right-[8px]">{`#${id}`}</p>
-      <img
-        className="w-[80px] h-[80px]"
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
-      />
+      <div className="w-[80px] h-[80px]">
+        <LazyLoadImage
+          alt={pokemon?.name}
+          effect="blur"
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+          className="w-full h-full"
+        />
+      </div>
+
       <p className="mb-[8px]">{startCase(pokemon.name)}</p>
       <div className="flex items-center">
         {isFetching ? (

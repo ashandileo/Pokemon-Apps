@@ -5,6 +5,8 @@ import { createRoot } from "react-dom/client";
 
 import App from "./App";
 
+import "react-loading-skeleton/dist/skeleton.css";
+
 // Create a client
 const queryClient = new QueryClient();
 

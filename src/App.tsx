@@ -5,7 +5,7 @@ import startCase from "lodash/startCase";
 import Header from "./components/header/Header";
 import SearchBar from "./components/shared/SearchBar/SearchBar";
 import Badge from "./components/shared/SearchBar/Badge";
-
+import Skeleton from "react-loading-skeleton";
 import { useFetchAllPokemon, useFetchPokemonDetail } from "./api/usePokemon";
 
 import "./app.css";
@@ -19,7 +19,7 @@ const App = () => {
   const [allPokemons, setAllPokemons] = useState([]);
 
   const { ref, inView } = useInView();
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
     useFetchAllPokemon();
 
   useEffect(() => {
@@ -52,10 +52,9 @@ const App = () => {
           {allPokemons?.map((pokemon: IPokemon, index) => (
             <Pokemon key={index} pokemon={pokemon} id={index + 1} />
           ))}
+          {isFetching && <Skeleton height={160} />}
         </ul>
-        <button className="opacity-0" onClick={() => fetchNextPage()} ref={ref}>
-          Fetch Next Page
-        </button>
+        <div className="opacity-0" ref={ref} />
       </div>
     </>
   );
@@ -67,7 +66,7 @@ interface IPokemonProps {
 }
 
 const Pokemon = ({ pokemon, id }: IPokemonProps) => {
-  const { data } = useFetchPokemonDetail(id);
+  const { data, isFetching } = useFetchPokemonDetail(id);
 
   const types = data?.data?.types;
 
@@ -107,13 +106,20 @@ const Pokemon = ({ pokemon, id }: IPokemonProps) => {
       />
       <p className="mb-[8px]">{startCase(pokemon.name)}</p>
       <div className="flex items-center">
-        {types?.map((type: any, index: number) => (
-          <Badge
-            variant={getTypeVariantColor(type?.type?.name)}
-            text={startCase(type?.type?.name)}
-            key={index}
-          />
-        ))}
+        {isFetching ? (
+          <>
+            <Skeleton width={56} height={24} className="mr-2" />
+            <Skeleton width={56} height={24} className="mr-2" />
+          </>
+        ) : (
+          types?.map((type: any, index: number) => (
+            <Badge
+              variant={getTypeVariantColor(type?.type?.name)}
+              text={startCase(type?.type?.name)}
+              key={index}
+            />
+          ))
+        )}
       </div>
     </div>
   );

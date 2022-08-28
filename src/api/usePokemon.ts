@@ -16,11 +16,13 @@ const useFetchAllPokemon = () => {
     {
       staleTime: 5 * 60 * 1000,
       getNextPageParam: (lastPage) => {
-        const url = new URL(lastPage?.data?.next);
-        const searchParams = new URLSearchParams(url.search);
-        const offset = toInteger(searchParams.get("offset"));
+        if (lastPage?.data?.next) {
+          const url = new URL(lastPage?.data?.next);
+          const searchParams = new URLSearchParams(url.search);
+          const offset = toInteger(searchParams.get("offset"));
 
-        return (offset ? offset : 0) + LIMIT;
+          return offset;
+        }
       },
     }
   );

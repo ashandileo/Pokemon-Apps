@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import flatten from "lodash/flatten";
+import { useInView } from "react-intersection-observer";
 import startCase from "lodash/startCase";
+
 import Header from "./components/header/Header";
 import SearchBar from "./components/shared/SearchBar/SearchBar";
 
@@ -16,7 +17,9 @@ interface IPokemon {
 const App = () => {
   const [allPokemons, setAllPokemons] = useState([]);
 
-  const { data, fetchNextPage } = useFetchAllPokemon();
+  const { ref, inView } = useInView();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useFetchAllPokemon();
 
   useEffect(() => {
     if (data) {
@@ -29,6 +32,12 @@ const App = () => {
       setAllPokemons(newPokemons);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage]);
 
   return (
     <>
@@ -43,7 +52,9 @@ const App = () => {
             <Pokemon key={index} pokemon={pokemon} id={index + 1} />
           ))}
         </ul>
-        <button onClick={() => fetchNextPage()}>Fetch Next Page</button>
+        <button className="opacity-0" onClick={() => fetchNextPage()} ref={ref}>
+          Fetch Next Page
+        </button>
       </div>
     </>
   );

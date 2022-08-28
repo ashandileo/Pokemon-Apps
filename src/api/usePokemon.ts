@@ -1,10 +1,29 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import toInteger from "lodash/toInteger";
 import { fetchAllPokemon, fetchPokemonDetail } from "./../fetcher/pokemons";
 
 const useFetchAllPokemon = () => {
-  return useQuery(["all-pokemon"], fetchAllPokemon, {
-    staleTime: 5 * 60 * 1000,
-  });
+  const LIMIT = 20;
+
+  return useInfiniteQuery(
+    ["all-pokemon"],
+    ({ pageParam }) => {
+      return fetchAllPokemon({
+        offset: pageParam,
+        limit: LIMIT,
+      });
+    },
+    {
+      staleTime: 5 * 60 * 1000,
+      getNextPageParam: (lastPage) => {
+        const url = new URL(lastPage?.data?.next);
+        const searchParams = new URLSearchParams(url.search);
+        const offset = toInteger(searchParams.get("offset"));
+
+        return (offset ? offset : 0) + LIMIT;
+      },
+    }
+  );
 };
 
 const useFetchPokemonDetail = (id: number) => {

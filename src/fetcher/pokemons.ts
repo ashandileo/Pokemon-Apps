@@ -1,7 +1,7 @@
 import fetchClient from "../utils/fetchClient";
 
-const fetchAllPokemon = () => {
-  return fetchClient.get("pokemon");
+const fetchAllPokemon = (params: any) => {
+  return fetchClient.get("pokemon", { params });
 };
 
 const fetchPokemonDetail = (id: number) => {

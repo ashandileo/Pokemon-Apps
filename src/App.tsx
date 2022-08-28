@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import flatten from "lodash/flatten";
 import startCase from "lodash/startCase";
 import Header from "./components/header/Header";
 import SearchBar from "./components/shared/SearchBar/SearchBar";
@@ -15,13 +16,19 @@ interface IPokemon {
 const App = () => {
   const [allPokemons, setAllPokemons] = useState([]);
 
-  const { isSuccess, data } = useFetchAllPokemon();
+  const { data, fetchNextPage } = useFetchAllPokemon();
 
   useEffect(() => {
-    if (isSuccess) {
-      setAllPokemons(data?.data?.results);
+    if (data) {
+      let newPokemons = [] as any;
+
+      data?.pages?.map((page) => {
+        newPokemons = [...newPokemons, ...page?.data?.results];
+      });
+
+      setAllPokemons(newPokemons);
     }
-  }, [isSuccess]);
+  }, [data]);
 
   return (
     <>
@@ -36,6 +43,7 @@ const App = () => {
             <Pokemon key={index} pokemon={pokemon} id={index + 1} />
           ))}
         </ul>
+        <button onClick={() => fetchNextPage()}>Fetch Next Page</button>
       </div>
     </>
   );

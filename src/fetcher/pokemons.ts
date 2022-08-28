@@ -1,5 +1,11 @@
 import fetchClient from "../utils/fetchClient";
 
-export const fetchAllPokemon = () => {
+const fetchAllPokemon = () => {
   return fetchClient.get("pokemon");
 };
+
+const fetchPokemonDetail = (id: number) => {
+  return fetchClient.get(`pokemon/${id}`);
+};
+
+export { fetchAllPokemon, fetchPokemonDetail };

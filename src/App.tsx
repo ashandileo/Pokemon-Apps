@@ -42,11 +42,11 @@ const App = () => {
   return (
     <>
       <Header />
-      <div className="container !mt-[20px]">
-        <SearchBar />
+      <div className="w-full p-[20px] bg-white sticky top-[56px] z-[20] shadow">
+        <SearchBar containerClass="container" />
       </div>
 
-      <div className="container">
+      <div className="container !mt-[20px]">
         <ul className="grid grid-cols-4 gap-4">
           {allPokemons?.map((pokemon: IPokemon, index) => (
             <Pokemon key={index} pokemon={pokemon} id={index + 1} />

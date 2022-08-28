@@ -1,12 +1,16 @@
 import React from "react";
 
-const SearchBar = () => {
+interface ISearchBar {
+  containerClass?: string;
+}
+
+const SearchBar = ({ containerClass }: ISearchBar) => {
   const onSubmitHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
   };
 
   return (
-    <form onSubmit={onSubmitHandler}>
+    <form onSubmit={onSubmitHandler} className={containerClass}>
       <div className="relative">
         <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
           <svg

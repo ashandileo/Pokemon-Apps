@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-
-import "./WelcomeScreen.css";
+import Bubble from "./components/shared/Bubble/Bubble";
 
 const WelcomeScreen = () => {
   const [playing, setPlaying] = useState(false);
@@ -15,7 +14,10 @@ const WelcomeScreen = () => {
   }, [playAudio, isPlayerReady]);
 
   return (
-    <div className="welcome-screen relative" onClick={() => setPlayAudio(true)}>
+    <div
+      className="relative bg-[url('./assets/images/HomeScreen.png')] bg-cover w-full h-[100vh] overflow-hidden"
+      onClick={() => setPlayAudio(true)}
+    >
       <div className="w-[45%] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex items-center flex-col">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
@@ -37,28 +39,6 @@ const WelcomeScreen = () => {
         onReady={() => setIsPlayerReady(true)}
       />
     </div>
-  );
-};
-
-const Bubble = () => {
-  return (
-    <>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-      <div className="bubble"></div>
-    </>
   );
 };
 

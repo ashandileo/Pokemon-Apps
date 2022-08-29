@@ -8,6 +8,10 @@ import App from "./App";
 import "react-loading-skeleton/dist/skeleton.css";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+import WelcomeScreen from "./WelcomeScreen";
+
+import "./app.css";
+
 // Create a client
 const queryClient = new QueryClient();
 
@@ -15,7 +19,8 @@ const root = createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
   <QueryClientProvider client={queryClient}>
-    <App />
+    {/* <App /> */}
+    <WelcomeScreen />
     <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>
 );

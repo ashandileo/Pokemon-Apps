@@ -10,8 +10,6 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import { useFetchAllPokemon, useFetchPokemonDetail } from "./api/usePokemon";
 
-import "./app.css";
-
 interface IPokemon {
   name: string;
   url: string;
